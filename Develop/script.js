@@ -5,18 +5,19 @@ var saveBTN = document.getElementById('save');
 var startTime = moment('8', 'h');
 var hoursWorked = 9
 let savedAssignments = []
+let localStorageSave = []
+let assignmentList = []
 
-
-// timeClock();
 displayBlocks();
 
-setInterval (timeClock,1000);
-
+// Time clock funtionality with moment.js
 function timeClock () {
     currentDayEl.html(moment().format('dddd, MMM YY - LTS'));
     return timeClock;
 }
+setInterval (timeClock,1000);
 
+// display initial time blocks
 function displayBlocks () {
     for (var index = 0; index < hoursWorked; index++) {
         let timeLoop = ""
@@ -41,6 +42,7 @@ function displayBlocks () {
     checkTime ()
 }
 
+// functionality to color code time blocks based on current time
 function checkTime (){
     for (let index = 0; index < hoursWorked; index++) {
         let timeCheck = document.getElementById(`time${index}`);
@@ -57,27 +59,22 @@ function checkTime (){
     }
 }  
 
+// Save button funcationality. Also updates local storage as it continues.
 function saveButton() {
     let eventEl = event.target.previousElementSibling
     let eventElValue = eventEl.value 
-    
-
-    // object
-    // console.log(savedItem)
     let savedItem = {
         value: eventElValue,
         index: eventEl.getAttribute("id")
     }
 
     savedAssignments.push(savedItem)
-    console.log(savedAssignments)
 
     localStorage.setItem("savedData", JSON.stringify(savedAssignments));
     
 }
 
-let localStorageSave = []
-let assignmentList = []
+// populate local storage data on page load
 function loadSavedData() {
     let localStorageData = localStorage.getItem("savedData");
     let localStorageParse = JSON.parse(localStorageData);
@@ -87,10 +84,8 @@ function loadSavedData() {
     function populateSavedData(target){
         let assignment = document.getElementById(target.index)
         let text = target.value 
-        console.log(target.value)
         assignment.setAttribute("value", text)
-        console.log(assignment.text)
-        // document.getElementById(target.index).innerHTML = target.value
+     
     }
-    }  
+}  
 
