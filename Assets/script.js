@@ -3,10 +3,10 @@ var dailyAssignmentsEl  = document.getElementById('dailyAssignments');
 var offTime = moment('5', 'h');
 var saveBTN = document.getElementById('save');
 var startTime = moment('8', 'h');
-var hoursWorked = 9
-let savedAssignments = []
-let localStorageSave = []
-let assignmentList = []
+var hoursWorked = 9;
+let savedAssignments = [];
+let localStorageSave = [];
+let assignmentList = [];
 
 displayBlocks();
 
@@ -67,9 +67,9 @@ function saveButton() {
         value: eventElValue,
         index: eventEl.getAttribute("id")
     }
-
+    
     savedAssignments.push(savedItem)
-
+    
     localStorage.setItem("savedData", JSON.stringify(savedAssignments));
     
 }
@@ -78,14 +78,20 @@ function saveButton() {
 function loadSavedData() {
     let localStorageData = localStorage.getItem("savedData");
     let localStorageParse = JSON.parse(localStorageData);
-    savedAssignments = localStorageParse;
-    savedAssignments.forEach(populateSavedData);
 
+    if (localStorageParse == null) {
+        savedAssignments = []
+    } 
+    else {
+    savedAssignments = localStorageParse};
+    
+    savedAssignments.forEach(populateSavedData);
+    
     function populateSavedData(target){
-        let assignment = document.getElementById(target.index)
-        let text = target.value 
-        assignment.setAttribute("value", text)
-     
+        
+            let assignment = document.getElementById(target.index)
+            let text = target.value 
+            assignment.setAttribute("value", text)
     }
 }  
 
